@@ -130,11 +130,11 @@ project:
 ❯ echo "Hello, this is some stdin" | julia --project --startup-file=no --trace-compile=app_precompile.jl MyApp.jl green
 ```
 
-The `.o` file is then created with the same `generate_sysimage.jl` file as in part 2:
+The `.o` file is then created with the same `custom_sysimage.jl` file as in part 2:
 
 ```
 ~/MyApp
-❯ gcc -shared -o sys.so -Wl,--whole-archive sys.o -Wl,--no-whole-archive -L"/home/kc/julia/lib" -ljulia
+❯ julia --startup-file=no -J"/home/kc/julia/lib/julia/sys.so" --output-o sys.o custom_sysimage.jl
 ```
 
 And then the sysimage is linked:
